@@ -20,3 +20,19 @@ The bot can be launched with Python. It accesses .env in the current working dir
 ```
 python "Dot 3 Github.py"
 ```
+
+## Spy module
+
+The `townsquare_spy` module monitors ongoing games. It includes bot integration, but also a command-line tool to monitor a single game. It can be invoked as:
+
+```
+python -m townsquare_spy "https://clocktower.online/#game"
+```
+
+## Testing
+
+The unit tests can be run by simply invoking `pytest`.
+
+```
+pytest
+```

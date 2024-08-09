@@ -1,2 +1,0 @@
-pytest==8.2.1
-websockets==12.0
