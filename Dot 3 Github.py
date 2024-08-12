@@ -7,6 +7,11 @@ import asyncio
 from datetime import datetime, timedelta, timezone
 #from datetime import timedelta
 
+# Load DISCORD_TOKEN etc from .env if it exists.
+# Alternatively, these can be put in environment variables.
+from dotenv import load_dotenv
+load_dotenv()
+
 intents = nextcord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -33,9 +38,9 @@ GAMES_RUNNING = False
 TIMEOUT_TIMER = 300  # 5 minutes
 
 # Channel IDs
-BEGINNER_CHANNEL_ID = 579331619333079050 #Beginner
-PICKUP_CHANNEL_ID = 691780603502133289 #Pickup
-MERGED_CHANNEL_ID = 691780603502133289 #Pickup
+BEGINNER_CHANNEL_ID = int(os.environ['BEGINNER_CHANNEL_ID'])
+PICKUP_CHANNEL_ID = int(os.environ['PICKUP_CHANNEL_ID'])
+MERGED_CHANNEL_ID = PICKUP_CHANNEL_ID
 
 # Ensure the files exist
 for file_path in [livequeue_file_path, cooldowns_file_path, active_st_file_path]:
@@ -109,7 +114,9 @@ async def remove_queue(user_id):
 
 @bot.event
 async def on_ready():
-    print(f'Bot connected as {bot.user}')
+    print(f'Bot connected as {bot.user}. This bot is a member of the following guilds:')
+    for g in bot.guilds:
+        print(f'* {g.name}')
     check_queue.start()
 
 @bot.slash_command(name="join", description="Join the Live Queue")
@@ -761,4 +768,4 @@ async def check_queue():
                         #await check_queue()
 
 # Add other necessary commands and functionality as needed
-bot.run('TOKEN')
+bot.run(os.environ['DISCORD_TOKEN'])
