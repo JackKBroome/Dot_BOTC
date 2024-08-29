@@ -14,7 +14,7 @@ load_dotenv()
 
 intents = nextcord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents, default_guild_ids=[int(id) for id in os.environ["GUILDS"].split(",")])
 
 # File paths in the same directory as the script
 livequeue_file_path = os.path.join(os.path.dirname(__file__), "Livequeue.json")
