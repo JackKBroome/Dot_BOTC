@@ -767,5 +767,7 @@ async def check_queue():
                         await remove_queue(user_id=user.id)
                         #await check_queue()
 
+bot.load_extension("townsquare_spy.discord", extras=dict(db_path="townsquare.db"))
+
 # Add other necessary commands and functionality as needed
 bot.run(os.environ['DISCORD_TOKEN'])

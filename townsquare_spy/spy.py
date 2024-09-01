@@ -1,15 +1,11 @@
-import argparse
-import asyncio
 import json
 import json.decoder
 import secrets
-import sys
 import websockets
 
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Any, Optional
+from typing import Optional
 from urllib.parse import urlparse
 
 # Used to store the state of a session.
@@ -35,6 +31,7 @@ class Session:
     locked_vote: int = 0
     marked_player: int = -1
     fabled: list[str] = field(default_factory=list)
+    edition_name: str = ""
 
 # Fancy (ANSI) formatting!
 # See strip_ansi in spy_test.py for how to remove this.
@@ -110,6 +107,7 @@ def set_edition(session, edition_info):
     """
     edition_name = edition_info['edition'].get('name', edition_info['edition']['id'].upper())
     session.log(f'The script was changed to {edition_name}.')
+    session.edition_name = edition_name
     if edition_info.get('roles'):
         session.log('It contains: ' + ', '.join([r.get('id') or r.get('0') for r in edition_info['roles']]))
 
@@ -464,28 +462,3 @@ async def connect_to_session(socket_url, origin, player_id):
             except json.decoder.JSONDecodeError:
                 continue
             yield m
-
-async def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('url')
-    args = parser.parse_args()
-
-    def print_ts(message):
-        ts = datetime.now(timezone.utc).strftime('\x1b[0;30m[%Y-%m-%d %H:%M:%S %Z]\x1b[0m')
-        print(ts, message)
-
-    player_id = random_player_id()
-    socket_url, app_origin = interpret_url(args.url, player_id)
-    session = Session()
-    session.log = print_ts
-
-    socket = connect_to_session(socket_url, origin=app_origin, player_id=player_id)
-    async for m in socket:
-        try:
-            receive(session, m)
-        except Exception as e:
-            print('While processing', m, file=sys.stderr)
-            raise
-
-if __name__ == '__main__':
-    asyncio.run(main())
