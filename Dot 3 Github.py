@@ -665,8 +665,8 @@ async def check_queue():
 
                 await channel.send(embed=embed, view=view)
                 await channel.send(f"{user.mention}, it's your turn!")
-                if pings[str(next_user.id)]['Next_in_Queue'] == "Yes":
-                            await next_user.send("You are now the required ST on the unofficial, Please ensure you press the START Button to begin")
+                if pings[str(user.id)]['Next_in_Queue'] == "Yes":
+                            await user.send("You are now the required ST on the unofficial, Please ensure you press the START Button to begin")
                 try:
                     next_user_id = sorted_queue[1]["Discord_ID"]
                     next_user = await bot.fetch_user(next_user_id)
@@ -735,8 +735,8 @@ async def check_queue():
 
                     await channel.send(embed=embed, view=view)
                     await channel.send(f"{user.mention}, it's your turn!")
-                    if pings[str(next_user.id)]['Next_in_Queue'] == "Yes":
-                            await next_user.send("You are now the required ST on the unofficial, Please ensure you press the START Button to begin")
+                    if pings[str(user.id)]['Next_in_Queue'] == "Yes":
+                            await user.send("You are now the required ST on the unofficial, Please ensure you press the START Button to begin")
 
                     try:
                         next_user_id = sorted_beginner_queue[1]["Discord_ID"]
@@ -806,8 +806,8 @@ async def check_queue():
 
                     await channel.send(embed=embed, view=view)
                     await channel.send(f"{user.mention}, it's your turn!")
-                    if pings[str(next_user.id)]['Next_in_Queue'] == "Yes":
-                            await next_user.send("You are now the required ST on the unofficial, Please ensure you press the START Button to begin")
+                    if pings[str(user.id)]['Next_in_Queue'] == "Yes":
+                            await user.send("You are now the required ST on the unofficial, Please ensure you press the START Button to begin")
 
                     try:
                         next_user_id = sorted_pickup_queue[1]["Discord_ID"]
