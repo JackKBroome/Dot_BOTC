@@ -178,17 +178,17 @@ async def join(
 
     await interaction.response.send_message(f"{user.display_name} has been added to the queue.")
 
-@bot.slash_command(name="SetDMAlerts", description="Set your DM alerts preferences.")
+@bot.slash_command(name="setdmalerts", description="Set your DM alerts preferences.")
 async def set_dm_alerts(
     interaction: nextcord.Interaction,
     next_in_queue: str = nextcord.SlashOption(
-        name="Next_in_Queue", description="Notify when you are about to ST", choices={"Yes": "Yes", "No": "No"}, required=True),
+        name="next_in_queue", description="Notify when you are about to ST", choices={"Yes": "Yes", "No": "No"}, required=True),
     second_in_queue: str = nextcord.SlashOption(
-        name="2nd_in_Queue", description="Notify when second in queue", choices={"Yes": "Yes", "No": "No"}, required=True),
+        name="second_in_queue", description="Notify when second in queue", choices={"Yes": "Yes", "No": "No"}, required=True),
     merge_split: str = nextcord.SlashOption(
-        name="Merge_Split", description="Notify on merge or split", choices={"Yes": "Yes", "No": "No"}, required=True),
+        name="merge_split", description="Notify on merge or split", choices={"Yes": "Yes", "No": "No"}, required=True),
     earlier_queue_members_leaving: str = nextcord.SlashOption(
-        name="Earlier_Queue_members_leaving", description="Notify if earlier queue members leave", choices={"Yes": "Yes", "No": "No"}, required=True)
+        name="earlier_queue_members_leaving", description="Notify if earlier queue members leave", choices={"Yes": "Yes", "No": "No"}, required=True)
 ):
     user = interaction.user
     preferences = {
